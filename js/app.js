@@ -25,19 +25,17 @@ Array.from(closeBtns).forEach((span) => {
   });
 });
 
-// When the user clicks anywhere outside of the modal, close it
+// Prevent modal close when clicking inside modal-content
+document.querySelectorAll('.modal-content').forEach(modalContent => {
+  modalContent.addEventListener('click', function(event) {
+    event.stopPropagation();
+  });
+});
 
+// Update window click handler to close modal only if clicking on modal background
 window.addEventListener("click", (ev) => {
-  ev.preventDefault();
-
-  const el = ev.target;
-
-  if (el.classList.contains("showModal")) {
-    el.style.display = "none";
-  } else {
-    if (el.href) {
-      console.log(el.href);
-      window.location.href = el.href;
-    }
+  // Only close if clicking directly on the modal background
+  if (ev.target.classList.contains("modal")) {
+    ev.target.style.display = "none";
   }
 });
